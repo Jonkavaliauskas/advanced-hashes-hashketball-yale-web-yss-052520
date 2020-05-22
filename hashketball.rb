@@ -143,6 +143,8 @@ def num_points_scored(player_name)
   end
 end
 
+# def method and change shoe as the argument. helper_method
+
 def shoe_size(player_name)
   # go through the game_hash, with team(either home or away) as the key and teamdata as the value
   game_hash.each do |team, teamdata|
