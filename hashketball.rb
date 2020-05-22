@@ -1,3 +1,5 @@
+require "pry"
+
 # Write your code below game_hash
 def game_hash
   {
@@ -127,3 +129,158 @@ def game_hash
 end
 
 # Write code here
+
+def num_points_scored(player_name)
+  # go through the game_hash, with team(either home or away) as the key and teamdata as the value
+  game_hash.each do |team, teamdata|
+  # go through the array of players   
+    teamdata[:players].each do |player|
+      # for the player passed into the function as an argument, provide the number of points
+      if player[:player_name] == player_name
+        return player[:points]
+      end
+    end
+  end
+end
+
+def shoe_size(player_name)
+  # go through the game_hash, with team(either home or away) as the key and teamdata as the value
+  game_hash.each do |team, teamdata|
+  # go through the array of players   
+    teamdata[:players].each do |player|
+      # for the player passed into the function as an argument, provide the shoe size
+      if player[:player_name] == player_name
+        return player[:shoe]
+      end
+    end
+  end
+end
+
+def team_colors(teamname)
+  # go through the game_hash, with team(either home or away) as the key and teamdata as the value
+  game_hash.each do |team, teamdata|
+  # if the name of the team matches the teamname passed into the method as an argument, return the colors for that team   
+    if teamdata[:team_name] == teamname
+      return teamdata[:colors]
+    end  
+  end
+end
+
+def team_names
+  # go through the game_hash, with team(either home or away) as the key and teamdata as the value. Use map to return a new array of team names
+  game_hash.map do |team, teamdata|
+    teamdata[:team_name]
+  end  
+end
+
+def player_numbers(teamname)
+   
+   # create a new array to store the results in, call it "result"
+  result = [] 
+   # go through the game_hash, with team(either home or away) as the key and teamdata as the value. 
+  
+  game_hash.each do |team, teamdata|
+    if teamdata[:team_name] == teamname
+      # within teamdata, go through each player and store their number in the result array 
+      teamdata[:players].each do |player|
+        result.push(player[:number])
+      end
+    end 
+  end
+  result
+end
+
+def player_stats(playername)
+  game_hash.each do |team, teamdata|
+    teamdata[:players].each do |player|
+      # for the player passed into the function as an argument, provide the stats by returning the entire associated hash
+      if player[:player_name] == playername
+        return player
+      end  
+    end
+  end
+end  
+    
+def big_shoe_rebounds
+  biggest_shoe_size = 0
+  rebounds = 0
+  game_hash.each do |team, teamdata|
+    teamdata[:players].each do |player|
+      # for the player passed into the function as an argument, provide the stats by returning the entire associated hash
+      if player[:shoe] > biggest_shoe_size
+        biggest_shoe_size = player[:shoe]
+        rebounds = player[:rebounds]
+      end  
+    end
+  end
+  return rebounds
+end  
+
+
+def most_points_scored
+  mvp = ""
+  most_points = 0
+  game_hash.each do |team, teamdata|
+    teamdata[:players].each do |player|
+      if player[:points] > most_points
+        most_points = player[:points]
+        mvp = player[:player_name]
+      end
+    end
+  end
+  return mvp
+end  
+
+
+def winning_team
+  home_score = []
+  away_score = []
+  homesum = 0
+  awaysum = 0
+  game_hash.each do |team, teamdata|
+    if teamdata[:team_name] == "Brooklyn Nets"
+       teamdata[:players].each do |player|
+       home_score.push(player[:points])
+     end
+    elsif teamdata[:team_name] == "Charlotte Hornets"
+       teamdata[:players].each do |player|
+       away_score.push(player[:points])
+      end
+    end    
+  end
+  a = home_score.inject(0){|homesum,x| homesum + x }
+  b = away_score.inject(0){|awaysum,x| awaysum + x }
+  if a > b 
+    puts "Brooklyn Nets win"
+  else
+    puts "Charlotte Hornets win"
+  end  
+end
+
+def player_with_longest_name
+  longest_name = "a"
+  game_hash.each do |team, teamdata|
+    teamdata[:players].each do |player|
+      if player[:player_name].to_s.length > longest_name.length
+        longest_name = player[:player_name]
+      end
+    end
+  end
+  longest_name
+end
+
+def long_name_steals_a_ton?
+  # simply looked up the steals for Bismack, which is 22
+  bismack_steals = 22
+  game_hash.each do |team, teamdata|
+    teamdata[:players].each do |player|
+      if player[:steals] < bismack_steals
+        return TRUE
+      else
+        return FALSE
+      end
+    end
+  end
+end  
+  
+
